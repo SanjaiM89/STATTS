@@ -50,7 +50,7 @@ const SignUp = () => {
           {/* Banner Image */}
           <div className="mb-8 rounded-2xl overflow-hidden">
             <img 
-              src="{imageSrc}" 
+              src={imageSrc}
               alt="Colorful abstract" 
               className="w-full h-40 object-cover"
             />
