@@ -2,41 +2,35 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-const SignUp = () => {
-  const [deviceSerial, setDeviceSerial] = useState('');
+const SignIn = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   
-  const { signup } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
-  const [imageSrc, setImageSrc] = useState("/images/img11.jpg"); // logo
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     
-    if (!deviceSerial || !phoneNumber || !password) {
+    if (!phoneNumber || !password) {
       setError('Please fill in all fields');
-      return;
-    }
-    
-    if (password.length < 8) {
-      setError('Password must be at least 8 characters');
       return;
     }
     
     setIsLoading(true);
     
     try {
-      const success = await signup(phoneNumber, password, deviceSerial);
+      const success = await login(phoneNumber, password);
       if (success) {
         navigate('/');
       } else {
-        setError('Failed to create account');
+        setError('Invalid credentials');
       }
     } catch (err) {
-      setError('An error occurred during sign up');
+      setError('An error occurred during sign in');
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -50,30 +44,13 @@ const SignUp = () => {
           {/* Banner Image */}
           <div className="mb-8 rounded-2xl overflow-hidden">
             <img 
-              src={imageSrc}
+              src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" 
               alt="Colorful abstract" 
               className="w-full h-40 object-cover"
             />
           </div>
           
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label htmlFor="deviceSerial" className="block text-sm font-medium text-gray-700 mb-1">
-                Device Serial No
-              </label>
-              <input
-                id="deviceSerial"
-                type="text"
-                value={deviceSerial}
-                onChange={(e) => setDeviceSerial(e.target.value)}
-                placeholder="Enter 9 digit Serial no"
-                className="w-full p-3 bg-gray-100 rounded-md"
-                required
-                minLength={9}
-                maxLength={9}
-              />
-            </div>
-            
             <div>
               <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-1">
                 Enter your Mobile Number
@@ -103,6 +80,11 @@ const SignUp = () => {
                 required
                 minLength={8}
               />
+              <div className="flex justify-end mt-1">
+                <Link to="#" className="text-sm text-blue-500 hover:underline">
+                  Forgot password?
+                </Link>
+              </div>
             </div>
             
             {error && (
@@ -114,12 +96,12 @@ const SignUp = () => {
               disabled={isLoading}
               className="w-full bg-gray-800 text-white p-3 rounded-md hover:bg-gray-700 transition-colors"
             >
-              {isLoading ? 'Signing Up...' : 'Sign Up'}
+              {isLoading ? 'Signing In...' : 'Sign In'}
             </button>
             
             <div className="text-center mt-4">
-              <Link to="/signin" className="text-gray-600 hover:underline">
-                Already have an account? Sign In
+              <Link to="/signup" className="text-gray-600 hover:underline">
+                Don't have Account? Signup Now
               </Link>
             </div>
           </form>
@@ -133,4 +115,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignIn;

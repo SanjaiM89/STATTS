@@ -2,35 +2,41 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-const SignIn = () => {
+const SignUp = () => {
+  const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   
-  const { login } = useAuth();
+  const { signup } = useAuth();
   const navigate = useNavigate();
-  const [imageSrc, setImageSrc] = useState("/images/img11.jpg"); // logo
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     
-    if (!phoneNumber || !password) {
+    if (!name || !phoneNumber || !password) {
       setError('Please fill in all fields');
+      return;
+    }
+    
+    if (password.length < 8) {
+      setError('Password must be at least 8 characters');
       return;
     }
     
     setIsLoading(true);
     
     try {
-      const success = await login(phoneNumber, password);
+      const success = await signup(phoneNumber, password, name);
       if (success) {
         navigate('/');
       } else {
-        setError('Invalid credentials');
+        setError('Failed to create account');
       }
     } catch (err) {
-      setError('An error occurred during sign in');
+      setError('An error occurred during sign up');
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -44,13 +50,28 @@ const SignIn = () => {
           {/* Banner Image */}
           <div className="mb-8 rounded-2xl overflow-hidden">
             <img 
-              src={imageSrc}
+              src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" 
               alt="Colorful abstract" 
               className="w-full h-40 object-cover"
             />
           </div>
           
           <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                Your Name
+              </label>
+              <input
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter your name"
+                className="w-full p-3 bg-gray-100 rounded-md"
+                required
+              />
+            </div>
+            
             <div>
               <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-1">
                 Enter your Mobile Number
@@ -91,12 +112,12 @@ const SignIn = () => {
               disabled={isLoading}
               className="w-full bg-gray-800 text-white p-3 rounded-md hover:bg-gray-700 transition-colors"
             >
-              {isLoading ? 'Signing In...' : 'Sign In'}
+              {isLoading ? 'Signing Up...' : 'Sign Up'}
             </button>
             
             <div className="text-center mt-4">
-              <Link to="/signup" className="text-gray-600 hover:underline">
-                Don't have Account? Signup Now
+              <Link to="/signin" className="text-gray-600 hover:underline">
+                Already have an account? Sign In
               </Link>
             </div>
           </form>
@@ -110,4 +131,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;
