@@ -53,11 +53,11 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const signup = async (phoneNumber, password, deviceSerial) => {
+  const signup = async (phoneNumber, password, name) => {
     // Simulate API call
     try {
       // In a real app, this would be an API call
-      if (password.length < 8 || !deviceSerial) {
+      if (password.length < 8 || !name) {
         return false;
       }
       
@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }) => {
         id: 'user_' + Date.now(),
         username: 'user_' + phoneNumber.substring(phoneNumber.length - 4),
         phoneNumber,
-        deviceSerial,
+        deviceSerial: name, // Using deviceSerial field to store name
       };
       
       setAuthState({

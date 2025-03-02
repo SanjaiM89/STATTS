@@ -10,6 +10,8 @@ import Services from './pages/Services';
 import Applications from './pages/Applications';
 import Notifications from './pages/Notifications';
 import Account from './pages/Account';
+import AddDevice from './pages/AddDevice';
+import AccountSettings from './pages/AccountSettings';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -74,6 +76,16 @@ function App() {
           <Route path="/account" element={
             <ProtectedRoute>
               <Account />
+            </ProtectedRoute>
+          } />
+          <Route path="/add-device" element={
+            <ProtectedRoute>
+              <AddDevice />
+            </ProtectedRoute>
+          } />
+          <Route path="/account-settings" element={
+            <ProtectedRoute>
+              <AccountSettings />
             </ProtectedRoute>
           } />
           

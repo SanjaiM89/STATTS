@@ -2,8 +2,15 @@ import React from 'react';
 import { Play, Search, Plus, Menu, BellRing } from 'lucide-react';
 import Header from '../components/Header';
 import BottomNavigation from '../components/BottomNavigation';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  const handleAddDevice = () => {
+    navigate('/add-device');
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 pb-16">
       <div className="flex items-center justify-between p-4 bg-white">
@@ -33,31 +40,20 @@ const Home = () => {
         
         <div className="bg-white rounded-lg p-4 mb-4">
           <div className="flex flex-col space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-gray-200 rounded-lg p-4 aspect-video flex items-center justify-center">
-                <div className="text-center">
-                  <span className="block text-sm font-medium">Camera 01</span>
-                </div>
-              </div>
-              <div className="bg-gray-200 rounded-lg p-4 aspect-video flex items-center justify-center">
-                <div className="text-center">
-                  <span className="block text-sm font-medium">Camera 02</span>
-                </div>
+            {/* Single camera view instead of four */}
+            <div className="bg-gray-200 rounded-lg p-4 aspect-video flex items-center justify-center">
+              <div className="text-center">
+                <span className="block text-sm font-medium">Main Camera</span>
               </div>
             </div>
-            
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-gray-200 rounded-lg p-4 aspect-video flex items-center justify-center">
-                <div className="text-center">
-                  <span className="block text-sm font-medium">Camera 03</span>
-                </div>
-              </div>
-              <div className="bg-gray-200 rounded-lg p-4 aspect-video flex items-center justify-center">
-                <div className="text-center">
-                  <span className="block text-sm font-medium">Camera 04</span>
-                </div>
-              </div>
-            </div>
+
+            <button 
+              onClick={handleAddDevice}
+              className="w-full bg-white border border-gray-300 rounded-lg py-3 flex items-center justify-center text-gray-700 hover:bg-gray-50 transition-colors"
+            >
+              <Plus size={20} className="mr-2" />
+              <span>Add Device</span>
+            </button>
           </div>
         </div>
         

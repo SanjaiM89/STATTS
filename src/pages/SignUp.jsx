@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const SignUp = () => {
-  const [deviceSerial, setDeviceSerial] = useState('');
+  const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -11,12 +11,12 @@ const SignUp = () => {
   
   const { signup } = useAuth();
   const navigate = useNavigate();
-  const [imageSrc, setImageSrc] = useState("/images/img11.jpg"); // logo
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     
-    if (!deviceSerial || !phoneNumber || !password) {
+    if (!name || !phoneNumber || !password) {
       setError('Please fill in all fields');
       return;
     }
@@ -29,7 +29,7 @@ const SignUp = () => {
     setIsLoading(true);
     
     try {
-      const success = await signup(phoneNumber, password, deviceSerial);
+      const success = await signup(phoneNumber, password, name);
       if (success) {
         navigate('/');
       } else {
@@ -50,7 +50,7 @@ const SignUp = () => {
           {/* Banner Image */}
           <div className="mb-8 rounded-2xl overflow-hidden">
             <img 
-              src={imageSrc}
+              src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" 
               alt="Colorful abstract" 
               className="w-full h-40 object-cover"
             />
@@ -58,19 +58,17 @@ const SignUp = () => {
           
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="deviceSerial" className="block text-sm font-medium text-gray-700 mb-1">
-                Device Serial No
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                Your Name
               </label>
               <input
-                id="deviceSerial"
+                id="name"
                 type="text"
-                value={deviceSerial}
-                onChange={(e) => setDeviceSerial(e.target.value)}
-                placeholder="Enter 9 digit Serial no"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter your name"
                 className="w-full p-3 bg-gray-100 rounded-md"
                 required
-                minLength={9}
-                maxLength={9}
               />
             </div>
             
