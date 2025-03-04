@@ -10,7 +10,7 @@ const SignIn = () => {
   
   const { login } = useAuth();
   const navigate = useNavigate();
-  const [imageSrc, setImageSrc] = useState("/images/img11.jpg"); // logo
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -44,7 +44,7 @@ const SignIn = () => {
           {/* Banner Image */}
           <div className="mb-8 rounded-2xl overflow-hidden">
             <img 
-              src={imageSrc}
+              src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" 
               alt="Colorful abstract" 
               className="w-full h-40 object-cover"
             />
@@ -80,6 +80,11 @@ const SignIn = () => {
                 required
                 minLength={8}
               />
+              <div className="flex justify-end mt-1">
+                <Link to="#" className="text-sm text-blue-500 hover:underline">
+                  Forgot password?
+                </Link>
+              </div>
             </div>
             
             {error && (

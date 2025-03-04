@@ -3,12 +3,18 @@ import { Settings, Wifi, HelpCircle, FileText, User, Info } from 'lucide-react';
 import Header from '../components/Header';
 import BottomNavigation from '../components/BottomNavigation';
 import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Account = () => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
   
   const handleLogout = () => {
     logout();
+  };
+
+  const handleAccountSettings = () => {
+    navigate('/account-settings');
   };
 
   return (
@@ -40,9 +46,12 @@ const Account = () => {
         
         <div className="bg-white rounded-lg overflow-hidden mb-4">
           <div className="divide-y divide-gray-100">
-            <div className="p-4 flex items-center">
+            <div 
+              className="p-4 flex items-center cursor-pointer hover:bg-gray-50"
+              onClick={handleAccountSettings}
+            >
               <Settings size={20} className="text-gray-500 mr-3" />
-              <span>Settings</span>
+              <span>Account Settings</span>
               <svg className="ml-auto" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
